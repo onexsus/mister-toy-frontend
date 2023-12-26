@@ -1,0 +1,27 @@
+.main-layout{
+  display: grid;
+  grid-template-columns: 20px 1fr 20px;
+}
+.main-layout > .full {
+  grid-column: 1 / -1;
+}
+.main-layout > *:not(.full) {
+  grid-column: 2;
+}
+
+
+
+.container {
+  max-width: 800px;
+  padding: 1em;
+  margin: auto;
+}
+
+footer {
+  background-color: var(--clr1);
+  color: var(--clr1bg);
+  padding: 1em;
+  text-align: center;
+}
+
+
