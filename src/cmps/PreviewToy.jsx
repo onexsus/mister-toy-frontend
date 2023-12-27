@@ -12,10 +12,7 @@ export function PreviewToy({toy,onRemoveToy,onEditToy}){
       <div>
                 <button onClick={() => {
                     onRemoveToy(toy._id)
-                }}>x</button>
-                <button onClick={() => {
-                    onEditToy(toy)
-                }}>Edit</button>
+                }}>Delete X</button>
             </div>
     </li>
   )

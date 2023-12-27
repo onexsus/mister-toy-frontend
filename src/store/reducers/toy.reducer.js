@@ -9,12 +9,10 @@ export const UPDATE_TOY = 'UPDATE_TOY'
 
 
 export const SET_IS_LOADING = 'SET_IS_LOADING'
-export const SET_FILTER_BY = 'SET_FILTER_BY'
 
 const initialState = {
     toys: [],
     isLoading: false,
-    filterBy: toyService.getDefaultFilter()
 }
 
 export function toyReducer(state = initialState, action = {}) {
@@ -26,8 +24,8 @@ export function toyReducer(state = initialState, action = {}) {
         case SET_TOYS:
             return { ...state, toys: action.toys }
         case REMOVE_TOY:
-            lastCars = [...state.cars]
-            cars = state.cars.filter(toy => toy._id !== action.toyId)
+            lastToys = [...state.toys]
+            toys = state.toys.filter(toy => toy._id !== action.toyId)
             return { ...state, toys, lastToys }
 
         case ADD_TOY:
@@ -40,10 +38,6 @@ export function toyReducer(state = initialState, action = {}) {
 
         case SET_IS_LOADING:
             return { ...state, isLoading: action.isLoading }
-
-        case SET_FILTER_BY:
-            return { ...state, filterBy: { ...state.filterBy, ...action.filterBy } }    
-
         default:
             return state
     }
