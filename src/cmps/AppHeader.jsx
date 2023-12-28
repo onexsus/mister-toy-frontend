@@ -33,7 +33,7 @@ export function AppHeader() {
         navigate('/')
     }
 
-
+    console.log(user);
     return (
         <header className="app-header full main-layout">
             <section className="header-container flex align-center justify-between">
@@ -44,6 +44,8 @@ export function AppHeader() {
                     <NavLink to="/" >Home</NavLink>
                     <NavLink to="/about" >About</NavLink>
                     <NavLink to="/toy" >Toys</NavLink>
+                    <NavLink to="/toy" >Toys</NavLink>
+                    {user &&user.isAdmin&& <NavLink to="/dashboard">Dashboard</NavLink>}
                 </nav>
             </section>
             {user ? (

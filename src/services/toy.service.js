@@ -18,6 +18,9 @@ export const toyService = {
   getDefaultFilter,
   getDefaultSort,
   getLabels,
+  getLabelCounts,
+  getToyLabels,
+  getAvgPricePerLabel
 }
 
 const labels = ["On wheels", "Box game", "Art", "Baby", "Doll", "Puzzle", "Outdoor", "Battery Powered"]
@@ -95,4 +98,68 @@ function getDefaultSort() {
         by: 'name',
         asc: true
     }
+}
+
+function getLabelCounts() {
+  const filter=getDefaultFilter()
+  const sort=getDefaultSort()
+  return query(filter,sort).then((toys) => {
+    const labelCounts = {}
+
+    toys.forEach((toy) => {
+      toy.labels.forEach((label) => {
+        if (labelCounts[label]) {
+          labelCounts[label]++
+        } else {
+          labelCounts[label] = 1
+        }
+      })
+    })
+    const labelCountArray = Object.entries(labelCounts).map(([label, count]) => ({
+      label,
+      count,
+    }))
+    return labelCountArray
+  })
+}
+
+function getAvgPricePerLabel() {
+  const filter=getDefaultFilter()
+  const sort=getDefaultSort()
+
+  return query(filter,sort).then((toys) => {
+    console.log('toys', toys)
+    const labelAvgPrices = toys.reduce((labelMap, item) => {
+      item.labels.forEach((label) => {
+        if (!labelMap[label]) {
+          labelMap[label] = { sum: 0, count: 0 };
+        }
+        labelMap[label].sum += item.price;
+        labelMap[label].count++;
+      });
+      return labelMap;
+    }, {});
+    console.log('labelAvgPrices', labelAvgPrices)
+
+    const averagePrices = {};
+    for (const label in labelAvgPrices) {
+      averagePrices[label] = labelAvgPrices[label].sum / labelAvgPrices[label].count;
+    }
+    console.log('averagePrices', averagePrices)
+
+
+    console.log(averagePrices);
+    const priceAvgArray = Object.entries(averagePrices).map(([label, avg]) => ({
+      label,
+      avg,
+    }))
+    console.log('priceAvgArray', priceAvgArray)
+
+    return priceAvgArray
+  })
+
+}
+
+function getToyLabels() {
+  return labels
 }

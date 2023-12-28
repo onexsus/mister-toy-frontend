@@ -24,8 +24,8 @@ export function ToyIndex() {
   useEffect(() => {
     loadToys(filterBy, sort)
         .then(() => {
-            console.log('toys:',toys);
-            console.log('Loaded successfully')
+          console.log('Loaded successfully')
+          console.log('toys:',toys);
         })
         .catch((err) => {
             showErrorMsg('Oops.. something went wrong, try again')
@@ -40,21 +40,6 @@ export function ToyIndex() {
       .catch((err) => {
         console.log("Cannot remove Toy", err)
         showErrorMsg("Cannot remove Toy")
-      })
-  }
-
-  function onEditToy(toy) {
-    const price = +prompt("New price?")
-    const toyToSave = { ...toy, price }
-
-    saveToy(toyToSave)
-      .then((savedToy) => {
-        showSuccessMsg(`toy updated to price: $${savedToy.price}`)
-      })
-
-      .catch((err) => {
-        console.log("Cannot update toy", err)
-        showErrorMsg("Cannot update toy")
       })
   }
 
