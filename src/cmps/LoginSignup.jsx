@@ -30,7 +30,7 @@ export function LoginSignup({ onSetUser }) {
 
     return (
         <div className="login-page">
-            <LoginForm
+            <LoginForm 
                 onLogin={onLogin}
                 isSignup={isSignup}
             />

@@ -38,25 +38,27 @@ export function AppHeader() {
         <header className="app-header full main-layout">
             <section className="header-container flex align-center justify-between">
             <div className='logo-appheader-container'>
-                <img src={logoPng}/>
+            <NavLink to="/" ><img src={logoPng}/></NavLink>
             </div>
                 <nav className="app-nav">
                     <NavLink to="/" >Home</NavLink>
                     <NavLink to="/about" >About</NavLink>
                     <NavLink to="/toy" >Toys</NavLink>
-                    {user &&user.isAdmin&& <NavLink to="/dashboard">Dashboard</NavLink>}
-                </nav>
-            </section>
+        </nav>
             {user ? (
-                < section >
+                < section className='user-container'>
+                    <div>
                     <span to={`/user/${user._id}`}>Hello {user.fullname}</span>
                     <button onClick={onLogout}>Logout</button>
+                    </div>
+                {user &&user.isAdmin&& <NavLink to="/dashboard">Dashboard</NavLink>}
                 </ section >
             ) : (
                 <section>
                     <LoginSignup onSetUser={onSetUser} />
                 </section>
             )}
+            </section>
             <UserMsg />
         </header>
     )

@@ -18,7 +18,8 @@ export function LoginForm({ onLogin, isSignup }) {
     }
 
     return (
-        <form className="login-form" onSubmit={handleSubmit}>
+        <form className="login-form flex " onSubmit={handleSubmit}>
+            <div className="flex flex-column">
             <input
                 type="text"
                 name="username"
@@ -45,7 +46,8 @@ export function LoginForm({ onLogin, isSignup }) {
                 onChange={handleChange}
                 required
             />}
-            <button>{isSignup ? 'Signup' : 'Login'}</button>
+            </div>
+            <button className="btn login">{isSignup ? 'Signup' : 'Login'}</button>
         </form>
     )
 }
