@@ -1,4 +1,4 @@
-button {
+.btn{
     cursor: pointer;
     background-color: $clr-bg3;
     margin: 0.5em;
@@ -8,10 +8,10 @@ button {
     font-family: sans-serif;
     font-size: 1rem;
     font-weight: 600;
-}
 
-button:hover {
+    &:hover {
     background-color: darken($clr-bg3,10%);
     color: white;
     transition: .3s;
+    }
 }

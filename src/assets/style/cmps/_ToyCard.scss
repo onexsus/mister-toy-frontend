@@ -1,0 +1,30 @@
+.toy-list{
+  display: grid;
+  grid-template-columns: repeat(auto-fill,minmax(250px,1fr));
+  gap: 20px;
+  justify-content: center;
+  margin-top: 1em;
+  margin-bottom: 1em;
+  // grid-auto-flow: column;
+  .toy-card{
+    display: flex;
+    flex-direction: column;
+    padding: 15px;
+    background-color: rgb(241, 204, 122);
+    border: 1px solid black;
+    border-radius: 1em;
+    h3{
+      font-size: 1.5em;
+    }
+    .toy-preview{
+    img{
+      width: 100%;
+    }
+    .toy-prev-btns{
+      flex-direction: row;
+    }
+
+    }
+  }
+}
+// toy-prev-btns

@@ -35,7 +35,7 @@ export function AppHeader() {
 
     console.log(user);
     return (
-        <header className="app-header full main-layout">
+        <header className="app-header full ">
             <section className="header-container flex align-center justify-between">
             <div className='logo-appheader-container'>
             <NavLink to="/" ><img src={logoPng}/></NavLink>
@@ -51,7 +51,7 @@ export function AppHeader() {
                     <span to={`/user/${user._id}`}>Hello {user.fullname}</span>
                     <button onClick={onLogout}>Logout</button>
                     </div>
-                {user &&user.isAdmin&& <NavLink to="/dashboard">Dashboard</NavLink>}
+                {user.isAdmin&& <NavLink to="/dashboard">Dashboard</NavLink>}
                 </ section >
             ) : (
                 <section>

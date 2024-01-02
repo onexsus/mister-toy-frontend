@@ -1,64 +1,51 @@
-import { useDispatch, useSelector } from "react-redux"
-import { useEffect , useState } from "react"
-import { NavLink } from 'react-router-dom'
-
-import { toyService } from "../services/toy.service.js"
-import { showSuccessMsg, showErrorMsg } from "../services/event-bus.service.js"
-import {
-  loadToys,
-  removeToy,
-  saveToy,
-} from "../store/actions/toy.actions.js"
-import { ToyList } from "../cmps/ToyList.jsx"
-import { ToyFilter } from "../cmps/ToyFilter"
-import { ToySort } from "../cmps/ToySort"
+import { useDispatch, useSelector } from 'react-redux'
+import { showSuccessMsg, showErrorMsg } from '../services/event-bus.service.js'
+import { useEffect } from 'react'
+import { loadToys, removeToyOptimistic, setFilter } from '../store/actions/toy.actions'
+import { ToyList } from '../cmps/ToyList.jsx'
+import { ToyFilter } from '../cmps/ToyFilter.jsx'
+import { Link } from 'react-router-dom'
 
 export function ToyIndex() {
-  const dispatch = useDispatch()
   const toys = useSelector((storeState) => storeState.toyModule.toys)
+  const filterBy = useSelector((storeState) => storeState.toyModule.filterBy)
   const isLoading = useSelector((storeState) => storeState.toyModule.isLoading)
-  const [filterBy, setFilterBy] = useState(
-    toyService.getDefaultFilter())
-    const [sort, setSort] = useState(toyService.getDefaultSort())
+  const user = useSelector((storeState) => storeState.userModule.loggedinUser)
 
   useEffect(() => {
-    loadToys(filterBy, sort)
-        .then(() => {
-          console.log('Loaded successfully')
-          console.log('toys:',toys);
-        })
-        .catch((err) => {
-            showErrorMsg('Oops.. something went wrong, try again')
-        })
-}, [filterBy, sort])
+    loadToys()
+  }, [filterBy])
 
-  function onRemoveToy(toyId) {
-    removeToy(toyId)
-      .then(() => {
-        showSuccessMsg("Toy removed")
-      })
-      .catch((err) => {
-        console.log("Cannot remove Toy", err)
-        showErrorMsg("Cannot remove Toy")
-      })
+async function onRemoveToy(toyId) {
+  try {
+    await removeToyOptimistic(toyId)
+    showSuccessMsg('Toy removed')
+  } catch (err) {
+    console.log('Cannot remove toy', err)
+    showErrorMsg('Cannot remove toy')
   }
-
-  function onSetFilter(filterBy) {
-    setFilterBy(prevFilter => ({ ...prevFilter, ...filterBy }))
 }
 
-function onSetSort(sort) {
-    setSort(sort)
+function onSetFilter(filterBy) {
+  setFilter(filterBy)
 }
 
   return (
     <div>
-      <h3>Mister Toy App</h3>
+      <h2>Mister Toy Store</h2>
       <main>
-      <NavLink to="/toy/edit" className="btn-add">Add Toy</NavLink>
-        <ToyFilter filterBy={filterBy} onSetFilter={onSetFilter} />
-        <ToySort sort={sort} onSetSort={onSetSort} />
-        <ToyList toys={toys} onRemoveToy={onRemoveToy}/>
+      <section className="filter-container">
+          {user && user.isAdmin && (
+            <button className="add-btn">
+              <Link to="/toy/edit">Add toy 🧸</Link>
+            </button>
+          )}
+          <ToyFilter filterBy={filterBy} onSetFilter={onSetFilter} />
+        </section>
+        {!isLoading && (
+          <ToyList toys={toys} user={user} onRemoveToy={onRemoveToy} />
+        )}
+        {isLoading && <div>Loading...</div>}
       </main>
     </div>
   )

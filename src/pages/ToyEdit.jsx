@@ -1,13 +1,16 @@
 import React, { useEffect, useState } from 'react'
+import { useDispatch, useSelector } from 'react-redux'
 import { useNavigate, useParams } from 'react-router-dom'
 import { toyService } from '../services/toy.service.js'
 import { saveToy } from '../store/actions/toy.actions.js'
 import { showErrorMsg, showSuccessMsg } from '../services/event-bus.service.js'
-const toyLabel = toyService.getLabels()
+
+const imgsToy= toyService.getToyImg()
 
 export function ToyEdit() {
+  const labels = useSelector((storeState) => storeState.toyModule.lables)
   const [toyToEdit, setToyToEdit] = useState(toyService.getEmptyToy())
-
+  
   const { toyId } = useParams()
   const navigate = useNavigate()
 
@@ -50,10 +53,12 @@ export function ToyEdit() {
 
   if (!toyToEdit) return <div>Loading...</div>
   return (
-    <form onSubmit={onSave} className='container edit-form' action=''>
+    <section className='edit-continer'>
+      <h1 className='title'>Toy Edit</h1>
+    <form onSubmit={onSave} className='edit-form' action=''>
       <div>
-        <label>
-          <span>Name</span>
+        <label className='flex justify-between'>
+          <span>Name :</span>
           <input
             className='edit-input name-input'
             value={toyToEdit.name}
@@ -64,8 +69,8 @@ export function ToyEdit() {
         </label>
       </div>
       <div>
-        <label>
-          <span>Price</span>
+        <label className='flex justify-between'>
+          <span>Price :</span>
           <input
             className='edit-input price-input'
             value={toyToEdit.price}
@@ -76,24 +81,49 @@ export function ToyEdit() {
         </label>
       </div>
       <div>
+        <label  className='flex justify-between'>
+          <span>Labels :</span>
         <select
           multiple
           value={toyToEdit.labels || []}
           onChange={handleChange}
           name='labels'
           className='edit-input'
-        >
+          >
           <option value={'all'}>All</option>
           <>
-            {toyLabel.map((label) => (
+            {labels.map((label) => (
               <option key={label} value={label}>
                 {label}
               </option>
             ))}
           </>
         </select>
+            </label>
       </div>
       <div>
+        <label  className='flex justify-between'>
+        <span>Image : </span>
+        <select
+        value={toyToEdit.url || imgsToy[1].url}
+        onChange={handleChange}
+        name='url'
+        className='edit-input'
+        >
+
+          <>
+            {imgsToy.map((img) => (
+              <option key={img.name} value={img.url}>
+                {img.name}
+              </option>
+            ))}
+          </>
+        </select>
+        </label>
+      </div>
+      <div>
+        <label  className='flex justify-between'>
+          <span> Stock :</span>
         <select
           value={getYesNo() || '1'}
           onChange={handleChange}
@@ -106,10 +136,20 @@ export function ToyEdit() {
           <option value='true'>Yes</option>
           <option value='false'>No</option>
         </select>
+        </label>
       </div>
       <button onClick={onSave} className='save-toy-btn'>
         Save
       </button>
     </form>
+      <div className='flex  flex-column toy-prev-edit'>
+        <div><img src={toyToEdit.url || imgsToy[1].url}/></div>
+        <div><img src=''/></div>
+        <h3>{toyToEdit.name}</h3>
+        <h3>Price : {toyToEdit.price}$</h3>
+        <button>Add To Cart</button>
+        <button>Details</button>
+      </div>
+    </section>
   )
 }

@@ -5,7 +5,8 @@ export const utilService = {
     loadFromStorage,
     saveToStorage,
     animateCSS,
-    debounce
+    debounce,
+    getAssetSrc
 }
 
 function makeId(length = 6) {
@@ -44,15 +45,16 @@ function loadFromStorage(key) {
     return (data) ? JSON.parse(data) : undefined
 }
 
+
+
 function debounce(func, timeout = 300) {
     let timer
     return (...args) => {
         clearTimeout(timer)
-        timer = setTimeout(() => {
-            func.apply(this, args)
-        }, timeout)
+        timer = setTimeout(() => { func.apply(this, args) }, timeout)
     }
 }
+
 
 
 // In our utilService
@@ -71,4 +73,11 @@ function animateCSS(el, animation) {
         }
         el.addEventListener('animationend', handleAnimationEnd, { once: true })
     })
+}
+
+function getAssetSrc(name) {
+    const path = `/src/assets/imgages/${name}`
+    const modules = import.meta.globEager('/src/assets/img/*')
+    const mod = modules[path]
+    return mod
 }

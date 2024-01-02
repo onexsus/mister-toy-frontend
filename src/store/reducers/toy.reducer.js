@@ -1,44 +1,49 @@
-import { toyService } from "../../services/toy.service.js"
+import { toyService } from "../../services/toy.service"
 
-
-// toy
+export const SET_FILTER = 'SET_FILTER'
 export const SET_TOYS = 'SET_TOYS'
 export const REMOVE_TOY = 'REMOVE_TOY'
+export const SET_LABLES = 'SET_LABLES'
 export const ADD_TOY = 'ADD_TOY'
 export const UPDATE_TOY = 'UPDATE_TOY'
-
-
+export const TOY_UNDO = 'TOY_UNDO'
 export const SET_IS_LOADING = 'SET_IS_LOADING'
 
+
 const initialState = {
-    toys: [],
+    filterBy: toyService.getDefaultFilter(),
     isLoading: false,
+    toys: [],
+    lastToys: [],
+    lables: ["On wheels", "Box game", "Art", "Baby", "Doll", "Puzzle", "Outdoor", "Battery Powered"]
 }
 
-export function toyReducer(state = initialState, action = {}) {
+export function toyReducer(state = initialState, action) {
     let toys
     let lastToys
-    let shoppingCart
     switch (action.type) {
-        // toy
         case SET_TOYS:
-            return { ...state, toys: action.toys }
+            lastToys = [...action.toys]
+            return { ...state, toys: action.toys, lastToys }
+        case SET_FILTER:
+            return { ...state, filterBy: { ...action.filterBy } }
+        case UPDATE_TOY:
+            toys = state.toys.map(toy => toy._id === action.toy._id ? action.toy : toy)
+            return { ...state, toys }
+        case ADD_TOY:
+            toys = [...state.toys, action.toy]
+            return { ...state, toys }
         case REMOVE_TOY:
             lastToys = [...state.toys]
             toys = state.toys.filter(toy => toy._id !== action.toyId)
             return { ...state, toys, lastToys }
-
-        case ADD_TOY:
-            toys = [...state.toys, action.toy]
+        case TOY_UNDO:
+            toys = [...state.lastToys]
             return { ...state, toys }
-
-        case UPDATE_TOY:
-            toys = state.toys.map(toy => toy._id === action.toy._id ? action.toy : toy)
-            return { ...state, toys }
-
         case SET_IS_LOADING:
             return { ...state, isLoading: action.isLoading }
         default:
             return state
     }
 }
+

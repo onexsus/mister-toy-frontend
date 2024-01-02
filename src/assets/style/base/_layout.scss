@@ -1,6 +1,7 @@
 .main-layout{
   display: grid;
   grid-template-columns: 20px 1fr 20px;
+  background-color: rgb(255, 242, 225);
 }
 .main-layout > .full {
   grid-column: 1 / -1;

@@ -1,0 +1,30 @@
+.hero-section{
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  height: 80vh;
+  h1{
+    margin: 0;
+  }
+  .hero-intro{
+    padding: 20px;
+    grid-column: 1;
+    grid-row: 1;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    font-size: 1.2em;
+    h1{
+      font-size: 1.4em;
+      margin-bottom: 1em;
+    }
+  }
+  .hero-bg{
+    grid-row: 1;
+    background-image: url("https://freepngimg.com/thumb/toy/33785-4-plush-toy-photos.png");
+    background-position: center;
+  background-size: contain;
+  background-repeat: no-repeat;
+    grid-column: 2;
+    width: 100%;
+  }
+}

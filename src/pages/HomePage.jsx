@@ -2,6 +2,7 @@
 // const { useSelector, useDispatch } = ReactRedux
 
 import { useDispatch, useSelector } from "react-redux"
+import { NavLink } from "react-router-dom"
 
 
 export function HomePage() {
@@ -14,8 +15,15 @@ export function HomePage() {
     }
 
     return (
-        <section>
-          <h1> hello</h1>
+        <section className="full hero-section">
+            <div className="hero-bg">
+                {/* <img src="" alt="" /> */}
+            </div>
+          <div className="hero-intro flex flex-column ">
+          <h1>Welcome to Our Toy Store<br/>Where Every Dream Takes Flight!</h1>
+          <p>Dive into our collection and find toys that spark imagination, foster learning, and bring heaps of fun to kids of all ages. From classic treasures to the latest innovations, there's something here to enchant every child.</p>
+        <NavLink className="btn" to="/toy" >Go To Store</NavLink>
+          </div>
         </section >
     )
 }

@@ -1,0 +1,26 @@
+.toy-details-container{
+  padding: 20px;
+  min-height: 80vh;
+  .toy-details{
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    width: 100%;
+    gap: 20px;
+    background-color: rgb(241, 204, 122);
+    padding: 20px;
+    border: 1px solid black;
+    border-radius: 2em;
+    margin-bottom: 1em;
+    .btn-details{
+      text-decoration: none;
+    }
+    img{
+      width:200px ;
+      align-self: center;
+      justify-self: center;
+    }
+  }
+  .posts-container{
+    width: 100%;
+  }
+}
