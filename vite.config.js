@@ -6,8 +6,8 @@ export default defineConfig({
   plugins: [react()],
 
   build:{
-    chunkSizeWarningLimit: 1600,
     outDir:'../mister-toy-backend/public',
+    chunkSizeWarningLimit: 1600,
     emptyOutDir: true
   }
 })
